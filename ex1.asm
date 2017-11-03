@@ -1,32 +1,38 @@
-;int res;
-;int var1;
-;int var2;
-;ires=var1;
-;if(res < var2)
-;res=var2;
+;	Exemplo elementar de construção de um pequeno programa.
+;	São definidas as regiões de memória essenciais para estrururar:
+;		- O arranque do programa após reset (.section start);
+; 		- O alojamento de variáveis acessíveis por endereçamento direto (.section directdata);
+;		- O programa (.text).
+;	Neste exemplo o programa está todo contido na sequência identificada pela label "main"; não 
+;	se usa o conceito de função.
 
 	.section start
 	.org 0
 	jmp main
-	
+
 	.section directdata
 	.org 4
 res:
-	.space 2 ;reserva o espaço da variavel a 2 bytes neste cado o endereco 4 e 5
+	.space 2
 var1:
 	.word 10
 var2:
 	.word 15
 	
-	.text ; inicio de uma regiao de memoria para inico das instrucoes
+	.text
 	.org 0x0080
+	
+;	Identidicar o maior valor de duas variáveis, var1 e var2, depositando-o na variável res.
+
 main:
-	ld r0, 6
-	ld r1, 8
-	sub r6, r0, r1 ; r6 recebe flags; resultador aritmetico e descartado
-	jnc next
+	ld r0, var1
+	ld r1, var2
+	sub r6, r0, r1	; r6 recebe flags; resultado aritmetico é descartado
+	jnc next		; se r0 < r1, cy = 1.
 	orl r0, r1, r1
 next:
 	st r0, res
+
 	jmp $
+	
 	.end
