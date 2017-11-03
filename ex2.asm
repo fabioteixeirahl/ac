@@ -21,8 +21,8 @@ var2:
 	.text ; inicio de uma regiao de memoria para inico das instrucoes
 	.org 0x0080
 main:
-	ld r0, 6
-	ld r1, 8
+	ld r0, var1
+	ld r1, var2
 	sub r6, r0, r1 ; r6 recebe flags; resultador aritmetico e descartado
 	jnc next
 	orl r0, r1, r1
